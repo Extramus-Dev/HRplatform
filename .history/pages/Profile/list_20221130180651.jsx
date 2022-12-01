@@ -1,24 +1,60 @@
 import { Add, Circle, MoreHoriz, SystemUpdateAlt } from "@mui/icons-material";
+import Image from "next/image";
 import Link from "next/link";
+import { BsPeopleFill } from "react-icons/bs";
+import EditIcon from "@mui/icons-material/Edit";
+import Popup from "reactjs-popup";
 import * as React from "react";
 import { useState, useEffect } from "react";
+import Modal5 from "../../components/Modal/Modal5.jsx";
 import { Tooltip, Button } from "@material-tailwind/react";
 import { AiOutlineEdit } from "react-icons/ai";
+import { Backdrop, CircularProgress } from "@mui/material";
 import axios from "axios";
 import cookie from "js-cookie";
-import LoadingState from "../../components/Utils/LoadingState.jsx";
-import StudentCountModal from "../../components/Modal/StudentCountModal.jsx";
-import useTableSearch from "../../hooks/useTableSearch";
+import InternsCountModal from "../../components/Modal/InternsCountModal.jsx";
+import { set } from "mongoose";
 
-export default function ApplicantsList() {
-  const [data, setData] = useState([]);
-  const [open, setOpen] = useState(false);
+
+
+export default function profileList() {
+  const [modalOn4, setModalOn4] = useState(false);
+  const [choice4, setChoice4] = useState(false);
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false);
   const token = cookie.get("token");
-  const [scModal, setScModal] = useState(false);
-  const [type, setType] = useState("");
+  const [departments, setDepartment] = useState([]);
+
+  const [icModal, setIcModal] = useState(true);
+  const [isloading, setLoading2] = useState(true);
+
+  
+
+  const clicked4 = () => {
+    setModalOn4(true);
+    setChoice4(true);
+    setIcModal(false);
+    setIcModal(true);
+  };
+
+
+  const [modalOn5, setModalOn5] = useState(false);
+  const [choice5, setChoice5] = useState(false);
+
+  const clicked5 = () => {
+    setModalOn5(true);
+  };
+  const InternsCountModal = ({ setIcModal }) => {
+    const handleCancelClick4 = () => {
+      setIcModal(false);
+    };
+    const handleChange = (event) => {
+      setSearch(event.target.value);
+    };
+  };
 
   useEffect(() => {
-    setOpen(true);
+    setLoading(true);
     const asyncRequest = async () => {
       try {
         const config = {
@@ -31,22 +67,37 @@ export default function ApplicantsList() {
           { params: { token: token } },
           config
         );
-        setData(data);
-        setOpen(false);
+        setStudents(data);
+        setLoading(false);
       } catch (e) {
         console.error(e);
-        setOpen(false);
+        setLoading(false);
       }
     };
     asyncRequest();
   }, []);
 
-  const [searchedVal, setSearchedVal] = useState("");
-  const { filteredData } = useTableSearch({ data, searchedVal });
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch("/api/student")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setStudents(data);
+  //       console.log(data);
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   return (
     <section className="relative w-full sm:static">
-      <LoadingState open={open} />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      ;
       <div className="w-full mb-12">
         <div className="relative sm:static flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white ">
           {/* Title Container */}
@@ -57,6 +108,15 @@ export default function ApplicantsList() {
                   <h3 className="font-semibold text-2xl">Students</h3>
                 </div>
               </div>
+              <button
+                // onClick={clicked4}
+                className="flex mr-52 ml-5 text-sm text-blue-300 hover:text-blue-500  "
+              >
+                View All
+              </button>
+              {/*
+              Accepted', 'Rejected', 'No Answer', 'Intership Finished','On Process
+              */}
               <div className="flex flex-col gap-4 justify-between rounded-t px-4 pt-4 mb-4 pb-6 border-b-2 border-gray-400">
                 <div className="flex gap-4 text-xs">
                   <div className="flex flex-col gap-2">
@@ -92,83 +152,100 @@ export default function ApplicantsList() {
             </div>
           </div>
           <div className="flex flex-row-reverse mt-4 mb-2">
-            <div className="flex flex-row-reverse bg-white mr-5 mt-0 mb-4 ml-auto ">
+            <div className="flex flex-row-reverse bg-white mt-0 mb-4 ml-auto ">
               {/* search */}
-              <form>
-                <label
-                  htmlFor="default-search"
-                  class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-                >
-                  Search
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <form className="flex items-center h-9">
+                <div className="relative w-full h-full">
+                  <div className="flex absolute h-full inset-y-0 left-0 items-center pl-3 pointer-events-none">
                     <svg
                       aria-hidden="true"
-                      class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      className="w-5 h-5 text-white-500 dark:text-white-400"
+                      fill="white"
+                      viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        fillRule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clipRule="evenodd"
                       ></path>
                     </svg>
                   </div>
                   <input
-                    type="search"
-                    id="default-search"
-                    class="block w-full pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="text"
+                    id="simple-search"
+                    className="h-full w-52 rounded-r-lg  border-none bg-[#0B3768] px-10 text-white  placeholder:italic placeholder:text-white placeholder:text-sm"
                     placeholder="Search..."
-                    onChange={(e) => {
-                      setSearchedVal(e.target.value);
-                    }}
+                    required
                   />
                 </div>
+                <button
+                  type="submit"
+                  className="w-8 px-2 rounded border-none h-full bg-blue-100  ml-1 mr-2 hover:bg-[#0B3768]/75 "
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="black"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
+                  <span className="sr-only">Search</span>
+                </button>
               </form>
+              <div className="">
+                <select
+                  name="filter"
+                  className="rounded-l-lg h-9 border-r-transparent w-30 border-[#0B3768] border-r-white bg-[#0B3768] text-white text-sm font-bold "
+                  required
+                >
+                  <option value="" disabled defaultValue>
+                    Categories{" "}
+                  </option>
+                  <option value="Date">Name</option>
+                  <option value="Date">Date</option>
+                  <option value="Department">Department</option>
+                  <option value="Position">Position</option>
+                  <option value="Status">Status</option>
+                </select>
+              </div>
             </div>
             <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black ">
               <button
-                onClick={(e) => setScModal(true)}
+                onClick={clicked4}
                 className="rounded-xl text-lg font-bold hover:bg-slate-200"
               >
                 Statistics
               </button>
             </div>
             {/* <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black">
-              <button
-                className="rounded-xl text-lg font-bold hover:bg-slate-200"
-                onClick={(e) => {
-                  setScModal(true);
-                  setType("onGoingInterns");
-                }}
-              >
+              <button className="rounded-xl text-lg font-bold hover:bg-slate-200">
+                All
+              </button>
+              <button className="rounded-xl text-lg font-bold hover:bg-slate-200">
                 Ongoing
               </button>
-              <button
-                className="rounded-xl text-lg font-bold hover:bg-slate-200"
-                onClick={(e) => {
-                  setScModal(true);
-                  setType("finishedInterns");
-                }}
-              >
+              <button className="rounded-xl text-lg font-bold hover:bg-slate-200">
                 Finished
               </button>
             </div> */}
           </div>
-          {scModal && <StudentCountModal setScModal={setScModal} type={type} />}
+
           {/* Table */}
           <div className="block w-full overflow-x-auto ">
-            {data.length === 0 ? (
+            {students.length === 0 ? (
               <div
                 className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap 
                   p-4 flex items-center"
               >
-                The student list is empty at the moment!
+                The Applicants list is empty at the moment!
                 <div className="text-blue-600/75 pl-1">
                   <Link href="/applicants/new"> Add a new applicant</Link>
                 </div>
@@ -204,7 +281,7 @@ export default function ApplicantsList() {
 
                 {/* Table Body */}
                 <tbody className="divide-y">
-                  {filteredData.map((student) => (
+                  {students.map((student) => (
                     <tr>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <span className="ml-3 font-bold">
@@ -222,16 +299,20 @@ export default function ApplicantsList() {
                       </td>
 
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.applicant.department} /{" "}
-                        {student.applicant.position}
+                        {student.department} / {student.position}
+                        
+                        {/* {student.applicant[0].department} /{" "}
+                        {student.applicant[0].position} */}
                       </td>
 
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.applicant.startDate}
+                        {/* {student.applicant[0].startDate} */}
+                        {student.startDate}
                       </td>
 
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.applicant.endDate}
+                        {/* {student.applicant[0].endDate} */}
+                        {student.endDate}
                       </td>
 
                       <td className="border-t-0 px-6  align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">

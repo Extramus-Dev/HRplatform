@@ -2,7 +2,7 @@ import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { BsPeopleFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import LoadingState from "../Utils/LoadingState";
+<<<<<<< HEAD:components/Modal/InternsCountModal.jsx
 import axios from "axios";
 import cookie from "js-cookie";
 
@@ -25,13 +25,24 @@ const departmanColor = (department) => {
   }
 };
 
+
+const InternsCountModal = ({ setIcModal }) => {
+  const handleCancelClick4 = () => {
+    setIcModal(false);
+  };
+  const [isloading, setLoading] = useState(true);
+  const [departments, setDepartment] = useState([]);
+  const token = cookie.get("token");  
+=======
+import LoadingState from "../Utils/LoadingState";
+
 const StudentCountModal = ({ setScModal, type }) => {
   const [departments, setDepartment] = useState([]);
   const [open, setOpen] = useState(false);
-  const token = cookie.get("token");
+>>>>>>> main:components/Modal/StudentCountModal.jsx
 
   useEffect(() => {
-    setOpen(true);
+    setLoading(true);
     const asyncRequest = async () => {
       try {
         const config = {
@@ -45,10 +56,11 @@ const StudentCountModal = ({ setScModal, type }) => {
           config
         );
         setDepartment(data);
-        setOpen(false);
+<<<<<<< HEAD:components/Modal/InternsCountModal.jsx
+        setLoading(false);
       } catch (e) {
         console.error(e);
-        setOpen(false);
+        setLoading(false);
       }
     };
     asyncRequest();
@@ -61,8 +73,14 @@ const StudentCountModal = ({ setScModal, type }) => {
   //       setDepartment(data);
   //     });
   // });
+=======
+        setOpen(false);
+      });
+  });
+>>>>>>> main:components/Modal/StudentCountModal.jsx
 
   return (
+
     <div className=" opacity-90  bg-zinc-300 fixed inset-0 z-50   ">
       {open && <LoadingState open={open} />}
       <div className="flex h-screen justify-center items-center  ">
@@ -85,7 +103,7 @@ const StudentCountModal = ({ setScModal, type }) => {
                 </div>
                 <div className="flex flex-col text-sm font-bold ">
                   <div>{department.department}</div>
-                  <div className="text-xl ml-3 ">{[department].length}</div>
+                  <div className="text-xl ml-3 ">{department[type].length}</div>
                 </div>
               </div>
             ))}
@@ -96,4 +114,9 @@ const StudentCountModal = ({ setScModal, type }) => {
   );
 };
 
+<<<<<<< HEAD:components/Modal/InternsCountModal.jsx
+
+export default InternsCountModal;
+=======
 export default StudentCountModal;
+>>>>>>> main:components/Modal/StudentCountModal.jsx

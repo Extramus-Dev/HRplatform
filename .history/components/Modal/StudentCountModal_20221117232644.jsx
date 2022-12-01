@@ -25,13 +25,19 @@ const departmanColor = (department) => {
   }
 };
 
+
+const InternsCountModal = ({ setIcModal }) => {
+  const handleCancelClick4 = () => {
+    setIcModal(false);
+  };
+  const [isloading, setLoading] = useState(true);
 const StudentCountModal = ({ setScModal, type }) => {
   const [departments, setDepartment] = useState([]);
+  const token = cookie.get("token");  
   const [open, setOpen] = useState(false);
-  const token = cookie.get("token");
 
   useEffect(() => {
-    setOpen(true);
+    setLoading(true);
     const asyncRequest = async () => {
       try {
         const config = {
@@ -45,10 +51,10 @@ const StudentCountModal = ({ setScModal, type }) => {
           config
         );
         setDepartment(data);
-        setOpen(false);
+        setLoading(false);
       } catch (e) {
         console.error(e);
-        setOpen(false);
+        setLoading(false);
       }
     };
     asyncRequest();
@@ -61,8 +67,12 @@ const StudentCountModal = ({ setScModal, type }) => {
   //       setDepartment(data);
   //     });
   // });
+        setOpen(false);
+      });
+  });
 
   return (
+
     <div className=" opacity-90  bg-zinc-300 fixed inset-0 z-50   ">
       {open && <LoadingState open={open} />}
       <div className="flex h-screen justify-center items-center  ">
@@ -85,7 +95,7 @@ const StudentCountModal = ({ setScModal, type }) => {
                 </div>
                 <div className="flex flex-col text-sm font-bold ">
                   <div>{department.department}</div>
-                  <div className="text-xl ml-3 ">{[department].length}</div>
+                  <div className="text-xl ml-3 ">{department[type].length}</div>
                 </div>
               </div>
             ))}

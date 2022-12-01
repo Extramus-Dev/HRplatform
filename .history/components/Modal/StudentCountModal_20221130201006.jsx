@@ -85,7 +85,7 @@ const StudentCountModal = ({ setScModal, type }) => {
                 </div>
                 <div className="flex flex-col text-sm font-bold ">
                   <div>{department.department}</div>
-                  <div className="text-xl ml-3 ">{[department].length}</div>
+                  <div>{department[type].count}</div>
                 </div>
               </div>
             ))}

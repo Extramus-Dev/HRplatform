@@ -7,7 +7,6 @@ import axios from "axios";
 import cookie from "js-cookie";
 import LoadingState from "../Utils/LoadingState";
 import EditDocumentsModal from "../Modal/EditDocumentsModal";
-import ArrowRightAlt from "@mui/icons-material/ArrowRightAlt";
 
 const DocumentListContent = ({ title, status }) => {
   const Border = () => {

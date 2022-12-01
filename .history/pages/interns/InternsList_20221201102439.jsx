@@ -26,7 +26,6 @@ export default function InternList() {
 
   const { filteredData } = useTableSearch({ data, searchedVal });
 
-
   useEffect(() => {
     setLoading(true);
     const asyncRequest = async () => {

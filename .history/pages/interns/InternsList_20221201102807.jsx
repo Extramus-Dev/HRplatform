@@ -26,7 +26,6 @@ export default function InternList() {
 
   const { filteredData } = useTableSearch({ data, searchedVal });
 
-
   useEffect(() => {
     setLoading(true);
     const asyncRequest = async () => {
@@ -262,7 +261,7 @@ export default function InternList() {
                             </div>
                             <div>
                             <button
-                                onClick={(e) => setEiModal(true)}
+                                onClick={(e) => href="/endInternship/EndDeparture"}
                                 type="submit"
                                 className="w-28 inline-flex justify-center py-2 px-4  shadow-sm text-sm font-medium border-solid border-2 border-white text-white bg-[#0B3768]  hover:bg-white hover:text-[#0B3768]"
                               >

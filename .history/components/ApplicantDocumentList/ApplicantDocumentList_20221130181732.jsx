@@ -7,7 +7,6 @@ import axios from "axios";
 import cookie from "js-cookie";
 import LoadingState from "../Utils/LoadingState";
 import EditDocumentsModal from "../Modal/EditDocumentsModal";
-import ArrowRightAlt from "@mui/icons-material/ArrowRightAlt";
 
 const DocumentListContent = ({ title, status }) => {
   const Border = () => {
@@ -151,14 +150,6 @@ const DocumentList = () => {
               <div className="flex items-center gap-1 text-xs font-light text-gray-500">
                 <p>Applied on {student.applicant.applicationDate}</p>
               </div>
-              <div className="flex cursor-pointer">
-              {/* Bottom Right */}
-              <div className="py-1 px-2 text-xs text-blue-900">
-                View All Documents
-              </div>
-              <ArrowRightAlt />
-              
-            </div>
             </div>
           </div>
         ))

@@ -7,7 +7,6 @@ import axios from "axios";
 import cookie from "js-cookie";
 import LoadingState from "../Utils/LoadingState";
 import EditDocumentsModal from "../Modal/EditDocumentsModal";
-import ArrowRightAlt from "@mui/icons-material/ArrowRightAlt";
 
 const DocumentListContent = ({ title, status }) => {
   const Border = () => {
@@ -53,7 +52,7 @@ const DocumentList = () => {
           },
         };
         const { data } = await axios.get(
-          `/api/applicant`,
+          `/api/intern`,
           { params: { token: token } },
           config
         );
@@ -75,9 +74,9 @@ const DocumentList = () => {
           className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap 
                   p-4 flex items-center"
         >
-          The Applicants list is empty at the moment!
+          The Intern list is empty at the moment!
           <div className="text-blue-600/75 pl-1">
-            <Link href="/applicants/new"> Add a new applicant</Link>
+            <Link href="/applicants/list"> Add a new Intern</Link>
           </div>
         </div>
       ) : (
@@ -95,15 +94,14 @@ const DocumentList = () => {
                 <div className="flex items-center gap-1 text-xs font-light text-gray-500">
                   <WorkOutline className="text-sm" />
                   <p>
-                    {student.applicant.department} /{" "}
-                    {student.applicant.position}
+                    {student.intern.department} / {student.intern.position}
                   </p>
                 </div>
               </div>
               {/* Top Right */}
               <div className="flex gap-2">
                 <div className="py-1 px-2 text-xs rounded bg-sky-200 text-blue-900">
-                  Starting the {student.applicant.startDate}
+                  Starting the {student.intern.startDate}
                 </div>
                 <Tooltip
                   className="bg-transparent text-black"
@@ -130,7 +128,7 @@ const DocumentList = () => {
                     student={student}
                     index={index}
                     students={students}
-                    type="applicant"
+                    type="intern"
                   />
                 )}
               </div>
@@ -138,10 +136,10 @@ const DocumentList = () => {
 
             {/* Middle */}
             <div className="flex gap-[2px]">
-              {Object.keys(students[index].applicant.documents).map((name) => (
+              {Object.keys(students[index].intern.documents).map((name) => (
                 <DocumentListContent
                   title={name}
-                  status={students[index].applicant.documents[name]}
+                  status={students[index].intern.documents[name]}
                 />
               ))}
             </div>
@@ -149,16 +147,8 @@ const DocumentList = () => {
             <div className="flex justify-between">
               {/* Bottom Left */}
               <div className="flex items-center gap-1 text-xs font-light text-gray-500">
-                <p>Applied on {student.applicant.applicationDate}</p>
+                <p>Starts on {student.intern.startDate}</p>
               </div>
-              <div className="flex cursor-pointer">
-              {/* Bottom Right */}
-              <div className="py-1 px-2 text-xs text-blue-900">
-                View All Documents
-              </div>
-              <ArrowRightAlt />
-              
-            </div>
             </div>
           </div>
         ))

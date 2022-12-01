@@ -131,15 +131,7 @@ export default function ApplicantsList() {
                 </div>
               </form>
             </div>
-            <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black ">
-              <button
-                onClick={(e) => setScModal(true)}
-                className="rounded-xl text-lg font-bold hover:bg-slate-200"
-              >
-                Statistics
-              </button>
-            </div>
-            {/* <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black">
+            <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black">
               <button
                 className="rounded-xl text-lg font-bold hover:bg-slate-200"
                 onClick={(e) => {
@@ -158,107 +150,11 @@ export default function ApplicantsList() {
               >
                 Finished
               </button>
-            </div> */}
+            </div>
           </div>
           {scModal && <StudentCountModal setScModal={setScModal} type={type} />}
           {/* Table */}
-          <div className="block w-full overflow-x-auto ">
-            {data.length === 0 ? (
-              <div
-                className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap 
-                  p-4 flex items-center"
-              >
-                The student list is empty at the moment!
-                <div className="text-blue-600/75 pl-1">
-                  <Link href="/applicants/new"> Add a new applicant</Link>
-                </div>
-              </div>
-            ) : (
-              <table className="items-center w-full border-collapse bg-white">
-                {/* Table Head */}
-                <thead>
-                  <tr>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Full Name
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      email
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Status
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Department / Position
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Start Date
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      End Date
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-
-                {/* Table Body */}
-                <tbody className="divide-y">
-                  {filteredData.map((student) => (
-                    <tr>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <span className="ml-3 font-bold">
-                          {" "}
-                          {student.firstName} {student.lastName}{" "}
-                        </span>
-                      </td>
-
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.email}
-                      </td>
-
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.applicationStatus}
-                      </td>
-
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.applicant.department} /{" "}
-                        {student.applicant.position}
-                      </td>
-
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.applicant.startDate}
-                      </td>
-
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {student.applicant.endDate}
-                      </td>
-
-                      <td className="border-t-0 px-6  align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                        <Tooltip
-                          className="bg-transparent text-black mt-2"
-                          content="Edit"
-                          animate={{
-                            mount: { scale: 1, y: 0 },
-                            unmount: { scale: 0, y: 25 },
-                          }}
-                        >
-                          <Button
-                            variant="gradient"
-                            className="text-black bg-transparent scale-100 hover:scale-125 p-0 cursor-pointer text-xl"
-                          >
-                            <Link href="/applicants/edit">
-                              <AiOutlineEdit className="m-2 mb-0 mt-0" />
-                            </Link>
-                          </Button>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+          
         </div>
       </div>
     </section>

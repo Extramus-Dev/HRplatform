@@ -131,15 +131,7 @@ export default function ApplicantsList() {
                 </div>
               </form>
             </div>
-            <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black ">
-              <button
-                onClick={(e) => setScModal(true)}
-                className="rounded-xl text-lg font-bold hover:bg-slate-200"
-              >
-                Statistics
-              </button>
-            </div>
-            {/* <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black">
+            <div className="flex flex-row gap-6 ml-9 h-8 border-b-2 text-lg border-black">
               <button
                 className="rounded-xl text-lg font-bold hover:bg-slate-200"
                 onClick={(e) => {
@@ -158,10 +150,10 @@ export default function ApplicantsList() {
               >
                 Finished
               </button>
-            </div> */}
+            </div>
           </div>
           {scModal && <StudentCountModal setScModal={setScModal} type={type} />}
-          {/* Table */}
+          {/* Table
           <div className="block w-full overflow-x-auto ">
             {data.length === 0 ? (
               <div
@@ -258,7 +250,7 @@ export default function ApplicantsList() {
                 </tbody>
               </table>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

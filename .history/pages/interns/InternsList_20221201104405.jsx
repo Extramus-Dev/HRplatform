@@ -27,6 +27,7 @@ export default function InternList() {
   const { filteredData } = useTableSearch({ data, searchedVal });
 
 
+
   useEffect(() => {
     setLoading(true);
     const asyncRequest = async () => {
@@ -261,6 +262,7 @@ export default function InternList() {
                               )}
                             </div>
                             <div>
+                              <link href="EndInternship/EndDeparture" >
                             <button
                                 onClick={(e) => setEiModal(true)}
                                 type="submit"
@@ -268,6 +270,11 @@ export default function InternList() {
                               >
                                 Departure
                               </button>
+                              </link>
+
+                              
+                      
+                              
                             </div>
                           </div>
                         </div>
