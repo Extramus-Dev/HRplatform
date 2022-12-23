@@ -65,8 +65,6 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
-
   const save = (intern) => {
     setOpenAlert(false);
     setOpenAlertIncludedDate(false);
@@ -214,7 +212,7 @@ function Attendence() {
               </form>
               <div className="relative"  >
               <button 
-              onClick={(student) => save(student.intern)}
+              onClick={(intern) => save(student.intern)}
               title="Save"
               className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-xs font-light pl-2 pr-3 py-2 shadow-sm cursor-pointer">
               <CheckCircle className="text-m py-1 " 

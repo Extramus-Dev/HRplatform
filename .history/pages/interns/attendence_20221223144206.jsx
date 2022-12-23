@@ -65,8 +65,6 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
-
   const save = (intern) => {
     setOpenAlert(false);
     setOpenAlertIncludedDate(false);
@@ -92,9 +90,7 @@ function Attendence() {
                   headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
-                    
                   },
-                  
                   body: JSONintern,
                 };
                 await fetch(endpoint, options);
@@ -116,9 +112,6 @@ function Attendence() {
   const clicked = () => {
     setAttendanceEditModel(true);
   };
-
-    
-
 
   const disableStatus = (intern, dt) => {
     if (
@@ -144,12 +137,16 @@ function Attendence() {
     );
   if (!data) return <p>No profile data</p>;
 
+
+
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
     console.log(today);
+
+
 
   return (
     <section className="relative w-full">
@@ -212,16 +209,23 @@ function Attendence() {
                   />
                 </div>
               </form>
+              
+              
               <div className="relative"  >
               <button 
-              onClick={(student) => save(student.intern)}
+              
+              onClick={(student) => save(student.intern)
+              
+              }
               title="Save"
               className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-xs font-light pl-2 pr-3 py-2 shadow-sm cursor-pointer">
               <CheckCircle className="text-m py-1 " 
+                
               />
-                Save All
+              
+                Save
               </button>
-            </div>            
+            </div>
             </div>
           </div>
           <Collapse in={openAlert}>

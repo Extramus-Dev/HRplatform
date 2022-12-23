@@ -257,6 +257,14 @@ export default function ApplicantsNew() {
     alert(`New student with name: - ${data.firstName} - created`);
   };
 
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
+  console.log(today);
+
+
   return (
     <section className="relative w-full">
       <div className="w-full">
@@ -374,6 +382,7 @@ export default function ApplicantsNew() {
                     </label>
                     <input
                       type="date"
+                      max={today}
                       name="date-of-birth"
                       required
                       id="dateOfBirth"

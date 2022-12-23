@@ -65,8 +65,6 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
-
   const save = (intern) => {
     setOpenAlert(false);
     setOpenAlertIncludedDate(false);
@@ -81,6 +79,7 @@ function Attendence() {
               label: "Yes",
               onClick: async () => {
                 setOpen(true);
+
                 intern.attendance.statusOfTheDay = status;
                 intern.attendance[status].count++;
                 intern.attendance[status].dates.push(date);
@@ -97,6 +96,29 @@ function Attendence() {
                   
                   body: JSONintern,
                 };
+                const response =
+                  intern.attendance.statusOfTheDay === "present"
+
+                    ? await fetch(endpoint, options)
+                    :
+                    intern.attendance.statusOfTheDay === "late"
+                    ? await fetch(endpoint, options)
+                    :
+                    intern.attendance.statusOfTheDay === "dayOff"
+                    ? await fetch(endpoint, options)
+                    :
+                    intern.attendance.statusOfTheDay === "excusedLeave"
+                    ? await fetch(endpoint, options)
+                    :
+                    intern.attendance.statusOfTheDay === "sick"
+                    ? await fetch(endpoint, options)
+                    :
+                    intern.attendance.statusOfTheDay === "unexcusedleave"
+                    ? await fetch(endpoint, options)
+                    :
+
+                    
+
                 await fetch(endpoint, options);
                 setOpen(false);
               },
@@ -144,12 +166,18 @@ function Attendence() {
     );
   if (!data) return <p>No profile data</p>;
 
+
+
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
     console.log(today);
+
+
+    
+
 
   return (
     <section className="relative w-full">
@@ -212,6 +240,8 @@ function Attendence() {
                   />
                 </div>
               </form>
+              
+           
               <div className="relative"  >
               <button 
               onClick={(student) => save(student.intern)}

@@ -65,7 +65,50 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
+  const handleSubmit = async (event) => {
+    event.saveAll = true;
+    event.preventDefault();
+    if (status && date) {
+      setOpenAlert(false);
+      setOpenAlertIncludedDate(false);
+      if (!dateIncluded) {
+        confirmAlert({
+          message: "Are you sure you want to save ?",
+          buttons: [
+            {
+              label: "Yes",
+              onClick: async () => {
+                setOpen(true);
+                intern.attendance.statusOfTheDay = status;
+                intern.attendance[status].count++;
+                intern.attendance[status].dates.push(date);
+                intern.token = token;
+                const JSONintern = JSON.stringify(intern);
+                const endpoint = `/api/intern/${intern._id}`;
+                const options = {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                  },
+                  body: JSONintern,
+                };
+                await fetch(endpoint, options);
+                setOpen(false);
+              },
+            },
+            {
+              label: "No",
+            },
+          ],
+        });
+        setStatus("");
+        setDate("");
+      } else setOpenAlertIncludedDate(true);
+    } else {
+      setOpenAlert(true);
+    }
+  };
 
   const save = (intern) => {
     setOpenAlert(false);

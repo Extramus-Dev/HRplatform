@@ -65,8 +65,6 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
-
   const save = (intern) => {
     setOpenAlert(false);
     setOpenAlertIncludedDate(false);
@@ -92,11 +90,35 @@ function Attendence() {
                   headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
-                    
+
                   },
-                  
+
                   body: JSONintern,
                 };
+                
+              // label: "Yes",
+              // onClick: async () => {
+              //   setOpen(true);
+              //   intern.attendance.statusOfTheDay = status;
+              //   intern.attendance[status].count++;
+              //   intern.attendance[status].dates.push(date);
+              //   intern.token = token;
+              //   const JSONintern = JSON.stringify(intern);
+              //   const endpoint = `/api/intern/${intern._id}`;
+              //   const options = {
+              //     method: "PUT",
+              //     headers: {
+              //       "Content-Type": "application/json",
+              //       "Access-Control-Allow-Origin": "*",
+                    
+              //     },
+                  
+              //     body: JSONintern,
+              //   };
+               
+              
+
+
                 await fetch(endpoint, options);
                 setOpen(false);
               },

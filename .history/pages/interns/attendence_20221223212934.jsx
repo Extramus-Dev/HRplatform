@@ -65,8 +65,6 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
-
   const save = (intern) => {
     setOpenAlert(false);
     setOpenAlertIncludedDate(false);

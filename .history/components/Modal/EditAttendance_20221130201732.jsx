@@ -111,9 +111,7 @@ const EditAttendance = ({ intern, setModel }) => {
                     Dates:
                   </label>
 
-                  <ul className="overflow-y-auto max-h-32 w-2/5 mb-8 space-y-4 text-left text-gray-500 dark:text-gray-400"
-                  title = "Scroll to see more dates"
-                  >
+                  <ul className="overflow-y-auto max-h-32 w-2/5 mb-8 space-y-4 text-left text-gray-500 dark:text-gray-400">
                     {dates.length == 0 ? (
                       <label className="flex items-center space-x-3">
                         No dates for this status

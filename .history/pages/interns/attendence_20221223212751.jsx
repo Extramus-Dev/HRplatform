@@ -65,8 +65,6 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
-
   const save = (intern) => {
     setOpenAlert(false);
     setOpenAlertIncludedDate(false);
@@ -97,6 +95,10 @@ function Attendence() {
                   
                   body: JSONintern,
                 };
+               
+              
+
+
                 await fetch(endpoint, options);
                 setOpen(false);
               },

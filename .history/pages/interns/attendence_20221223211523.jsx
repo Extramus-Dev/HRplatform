@@ -65,8 +65,6 @@ function Attendence() {
     asyncRequest();
   }, []);
 
-  
-
   const save = (intern) => {
     setOpenAlert(false);
     setOpenAlertIncludedDate(false);
@@ -81,6 +79,7 @@ function Attendence() {
               label: "Yes",
               onClick: async () => {
                 setOpen(true);
+
                 intern.attendance.statusOfTheDay = status;
                 intern.attendance[status].count++;
                 intern.attendance[status].dates.push(date);
@@ -97,6 +96,10 @@ function Attendence() {
                   
                   body: JSONintern,
                 };
+               
+              
+
+
                 await fetch(endpoint, options);
                 setOpen(false);
               },
@@ -144,12 +147,18 @@ function Attendence() {
     );
   if (!data) return <p>No profile data</p>;
 
+
+
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
     console.log(today);
+
+
+    
+
 
   return (
     <section className="relative w-full">
@@ -212,6 +221,8 @@ function Attendence() {
                   />
                 </div>
               </form>
+              
+           
               <div className="relative"  >
               <button 
               onClick={(student) => save(student.intern)}
@@ -338,7 +349,7 @@ function Attendence() {
                       </td>
 
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                        <select
+                        {/* <select
                           id="country"
                           className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                           onClick={(e) => setStatus(e.target.value)}
@@ -352,7 +363,7 @@ function Attendence() {
                           <option value="unexcusedleave">
                             Unexecused leave
                           </option>
-                        </select>
+                        </select> */}
                       </td>
 
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">

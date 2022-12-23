@@ -257,6 +257,14 @@ export default function ApplicantsNew() {
     alert(`New student with name: - ${data.firstName} - created`);
   };
 
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
+  console.log(today);
+
+
   return (
     <section className="relative w-full">
       <div className="w-full">
@@ -374,6 +382,7 @@ export default function ApplicantsNew() {
                     </label>
                     <input
                       type="date"
+                      max={today}
                       name="date-of-birth"
                       required
                       id="dateOfBirth"
@@ -472,6 +481,7 @@ export default function ApplicantsNew() {
                       <input
                         type="date"
                         name="applied-on"
+                        max={today}
                         id="applicationDate"
                         required
                         className="focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -485,6 +495,7 @@ export default function ApplicantsNew() {
                       </label>
                       <input
                         type="date"
+                        max={today}
                         name="interview-date"
                         id="hrInterviewDate"
                         required
@@ -500,6 +511,7 @@ export default function ApplicantsNew() {
                       </label>
                       <input
                         type="date"
+                        max={today}
                         name="ceo-interview"
                         id="ceoInterview"
                         required
