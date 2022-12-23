@@ -1,5 +1,5 @@
 import { UploadFileOutlined, Verified } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -15,8 +15,11 @@ export default function DashboardView() {
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [internId, setInternId] = useState("");
 
   const [Group, setGroup] = useState("");
+  const [swapGroup1, setSwapGroup1] = useState("");
+  const [swapGroup2, setSwapGroup2] = useState("");
 
   const [mondayStartTime, setMondayStartTime] = useState("");
   const [mondayEndTime, setMondayEndTime] = useState("");
@@ -33,7 +36,7 @@ export default function DashboardView() {
   const [fridayStartTime, setFridayStartTime] = useState("");
   const [fridayEndTime, setFridayEndTime] = useState("");
 
-  const clearScheduleFields = () => {
+  const clearFields = () => {
     setGroup("");
     setMondayStartTime("");
     setMondayEndTime("");
@@ -45,6 +48,11 @@ export default function DashboardView() {
     setThursdayEndTime("");
     setFridayStartTime("");
     setFridayEndTime("");
+    setName("");
+    setSurname("");
+    setInternId("");
+    setSwapGroup1("");
+    setSwapGroup2("");
   };
 
   const handleAddSchedule = async () => {
@@ -97,7 +105,7 @@ export default function DashboardView() {
         config
       );
       setLoading(false);
-      clearScheduleFields();
+      clearFields();
       alert("Removed");
     } catch (e) {
       alert("not Removed");
@@ -136,7 +144,39 @@ export default function DashboardView() {
       setLoading(false);
     }
   };
-  const handleSwapSchedule = async (event) => {};
+  const handleSwapSchedule = async (event) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        `/api/weeklySchedule/swapGroup`,
+        {
+          params: {
+            token: token,
+            swapGroup1: swapGroup1,
+            swapGroup2: swapGroup2,
+          },
+        },
+        config
+      );
+
+      setData(data);
+      setLoading(false);
+
+      setSwapGroup1("");
+      setSwapGroup2("");
+
+      alert("Swap Successfully");
+    } catch (e) {
+      alert("Match Couldn't found");
+      console.error(e);
+      setLoading(false);
+    }
+  };
   const handleMatchGroup = async (event) => {
     setLoading(true);
     try {
@@ -153,7 +193,7 @@ export default function DashboardView() {
       setData(data);
       setLoading(false);
 
-      clearScheduleFields();
+      clearFields();
 
       // Defination
       setGroup(data.Group);
@@ -175,7 +215,80 @@ export default function DashboardView() {
       setLoading(false);
     }
   };
-  const handleMatchIntern = async (event) => {};
+  const handleMatchIntern = async (event) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.get(
+        `/api/weeklySchedule/matchIntern`,
+        { params: { token: token, firstName: name, lastName: surname } },
+        config
+      );
+      setData(data);
+      setLoading(false);
+
+      // Defination
+      setInternId(data);
+      // Defination
+      alert("Match found");
+    } catch (e) {
+      alert("Match Couldn't found");
+      console.error(e);
+      setLoading(false);
+    }
+  };
+  const handleAddInternToGroup = async (event) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `/api/weeklySchedule/internOperations`,
+        { params: { token: token, internId: internId, Group: Group } },
+        config
+      );
+      setData(data);
+      setLoading(false);
+
+      // Defination
+
+      // Defination
+    } catch (e) {
+      console.error(e);
+      setLoading(false);
+    }
+  };
+  const handleChangeInternToGroup = async (event) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        `/api/weeklySchedule/internOperations`,
+        { params: { token: token, internId: internId, Group: Group } },
+        config
+      );
+      setData(data);
+      setLoading(false);
+
+      // Defination
+
+      // Defination
+    } catch (e) {
+      console.error(e);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col w-full">
@@ -185,6 +298,9 @@ export default function DashboardView() {
             <h3 className="font-semibold text-2xl">Weekly Schedule</h3>
             {/* Add/edit/remove New Schedule */}
             <Popup
+              onClose={(e) => {
+                clearFields();
+              }}
               contentStyle={{ background: "#0B3768", borderRadius: "0.25rem" }}
               trigger={
                 <button className="bg-white flex w-[25rem] p-3 rounded-md border-2 items-center justify-start gap-3">
@@ -201,7 +317,7 @@ export default function DashboardView() {
               }
               position="bottom"
             >
-              {/* NEW POST */}
+              {/* Edit/new/remove group POST */}
               <div className="m-2 p-4">
                 <form>
                   <div>
@@ -380,16 +496,77 @@ export default function DashboardView() {
                       >
                         Delete
                       </Button>
-                      <Button variant="contained" onClick={handleSwapSchedule}>
+
+                      {/* <Button variant="contained" onClick={handleSwapSchedule}>
                         Swap group hours
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </form>
               </div>
             </Popup>
+
+            {/* Swap Schedule Groups */}
+            <Popup
+              onClose={(e) => {
+                clearFields();
+              }}
+              contentStyle={{ background: "#0B3768", borderRadius: "0.25rem" }}
+              trigger={
+                <button className="bg-white flex w-[25rem] p-3 rounded-md border-2 items-center justify-start gap-3">
+                  <div className="buttonImage text-[#2F80ED] bg-sky-100 flex items-center justify-center h-12 w-12 rounded-full">
+                    <UploadFileOutlined />
+                  </div>
+                  <div className="buttonText mb-1">SWAP Groups Hours</div>
+                </button>
+              }
+              position="bottom"
+            >
+              <div className="m-2 p-4">
+                <form>
+                  <div>
+                    <h6 className="font-semibold text-m text-white pt-2 pb-4">
+                      Which groups do you want to swap with each other
+                    </h6>
+                  </div>
+                  <input
+                    value={swapGroup1}
+                    id="swapGroup1"
+                    onChange={(e) => {
+                      setSwapGroup1(e.target.value);
+                    }}
+                    className="m-1 p-2"
+                    placeholder="Group 1: "
+                    type="text"
+                  />
+                  <input
+                    value={swapGroup2}
+                    id="swapGroup2"
+                    onChange={(e) => {
+                      setSwapGroup2(e.target.value);
+                    }}
+                    className="m-1 p-2"
+                    placeholder="Group 2: "
+                    type="text"
+                  />
+                  <div>
+                    <Button
+                      variant="contained"
+                      className="font-semibold text-m text-white pt-2 pb-4"
+                      onClick={handleSwapSchedule}
+                    >
+                      Swap
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            </Popup>
+
             {/* add/edit/remove interns group */}
             <Popup
+              onClose={(e) => {
+                clearFields();
+              }}
               contentStyle={{ background: "#0B3768", borderRadius: "0.25rem" }}
               trigger={
                 <button className="bg-white flex w-[25rem] p-3 rounded-md border-2 items-center justify-start gap-3">
@@ -442,6 +619,19 @@ export default function DashboardView() {
                           required
                         />
                       </div>
+                      <div className="flex flex-row mx-2 mt-2 mb-4">
+                        <h2 className="font-semibold text-l text-white ">
+                          Intern ID:{" "}
+                        </h2>
+                        <input
+                          className="rounded border-none bg-[#e0f2fe] text-black h-7 w-72 ml-2 placeholder:italic placeholder:text-#0B3768 placeholder:text-sm"
+                          type="text"
+                          value={internId}
+                          variant="outlined"
+                          placeholder="Intern ID"
+                          inputProps={{ readOnly: true }}
+                        />
+                      </div>
 
                       <Button
                         className="rounded border-none bg-[#e0f2fe] text-black h-7  ml-2 placeholder:italic placeholder:text-#0B3768 placeholder:text-sm"
@@ -477,11 +667,14 @@ export default function DashboardView() {
                       <Button
                         variant="contained"
                         color="success"
-                        onClick={handleAddSchedule}
+                        onClick={handleAddInternToGroup}
                       >
                         Add
                       </Button>
-                      <Button variant="contained" onClick={handleEditSchedule}>
+                      <Button
+                        variant="contained"
+                        onClick={handleChangeInternToGroup}
+                      >
                         Change
                       </Button>
                     </div>
@@ -491,6 +684,26 @@ export default function DashboardView() {
             </Popup>
           </div>
         </div>
+      </div>
+      {/* TABLE */}
+      <div className="block w-full overflow-x-auto ">
+        <table className="items-center w-full border-collapse bg-white">
+          asd
+          {/* Table Head */}
+          <thead>
+            <tr>
+              <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                First Name
+              </th>
+              <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Last Name
+              </th>
+              <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Group
+              </th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
   );

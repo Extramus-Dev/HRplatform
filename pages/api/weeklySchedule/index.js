@@ -43,7 +43,6 @@ export default async function handler(req, res) {
   }
   if (method === "PUT") {
     try {
-      console.log(req.body.params.scheduleGroup);
       const weeklySchedule = await WeeklySchedule.updateOne(
         {
           Group: req.body.params.scheduleGroup.Group,
@@ -91,7 +90,6 @@ export default async function handler(req, res) {
   }
   if (method === "DELETE") {
     try {
-      console.log(req.query.Group);
       const weeklySchedule = await WeeklySchedule.deleteOne({
         Group: req.query.Group,
       });

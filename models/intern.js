@@ -14,6 +14,7 @@ const InternSchema = new mongoose.Schema({
   position: { type: String, maxlength: 30 },
   student: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
   status: { type: String },
+  group: { type: mongoose.Schema.Types.ObjectId, ref: "weeklySchedule" },
   attendance: {
     present: {
       count: { type: Number, default: 0 },
