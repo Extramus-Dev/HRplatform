@@ -3,27 +3,24 @@ import WeeklySchedule from "../../../models/weeklySchedule";
 import dbConnect from "../../../util/mongodb";
 import { tokenCheckFunction } from "../auth/tokenCheck";
 
-dbConnect();
-
 export default async function handler(req, res) {
   const { method } = req;
-  console.log(method);
-  //    // Token CHECK
-  //    let token = req.query.token
-  //    ? req.query.token
-  //    : req.body.token
-  //    ? req.body.token
-  //    : "";
-  //  try {
-  //    tokenCheckFunction(token);
-  //  } catch (e) {
-  //    console.error(e);
-  //    res.status(401).json("Unauthorized User");
-  //  }
-  //  // Token CHECK
-
   const db = await getMongoDb();
   await dbConnect();
+  // Token CHECK
+  let token = req.query.token
+    ? req.query.token
+    : req.body.token
+    ? req.body.token
+    : "";
+  try {
+    tokenCheckFunction(token);
+  } catch (e) {
+    console.error(e);
+    res.status(401).json("Unauthorized User");
+  }
+  // Token CHECK
+
   if (method === "GET") {
     try {
       const weeklySchedule = await WeeklySchedule.find({});

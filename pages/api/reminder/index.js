@@ -4,6 +4,8 @@ import dbConnect from "../../../util/mongodb";
 import { tokenCheckFunction } from "../auth/tokenCheck";
 export default async function handler(req, res) {
   const { method } = req;
+  const db = await getMongoDb();
+  await dbConnect();
 
   // Token CHECK
   let token = req.query.token
@@ -19,8 +21,6 @@ export default async function handler(req, res) {
   }
   // Token CHECK
 
-  const db = await getMongoDb();
-  await dbConnect();
   if (method === "GET") {
     try {
       const reminder = await Reminder.find({});

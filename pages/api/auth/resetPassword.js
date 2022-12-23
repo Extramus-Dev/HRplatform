@@ -2,9 +2,9 @@
 import dbConnect from "../../../util/mongodb";
 import User from "../../../models/user";
 import bcrypt from "bcryptjs";
-dbConnect();
 
 export default async (req, res) => {
+  await dbConnect();
   try {
     if (req.method === "POST") {
       const { email, password } = req.body;
@@ -12,11 +12,8 @@ export default async (req, res) => {
       if (!user) {
         res.status(422).json({ message: "User not Exists" });
       } else {
-       const secret = parseInt(process.env.JWT_SECRET) 
-        const HashedPassword = await bcrypt.hash(
-            password,
-            secret
-          );
+        const secret = parseInt(process.env.JWT_SECRET);
+        const HashedPassword = await bcrypt.hash(password, secret);
         user.password = HashedPassword;
         await user.save();
         res.status(200).json({ message: "Update is Success" });

@@ -4,9 +4,8 @@ import User from "../../../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-dbConnect();
-
 export default async (req, res) => {
+  await dbConnect();
   try {
     if (req.method === "POST") {
       const { email, password } = req.body;
@@ -22,12 +21,10 @@ export default async (req, res) => {
             res.status(404).json({ message: "Password Doesn't Match" });
           } else {
             if (user.confirmation === "0") {
-              res
-                .status(404)
-                .json({
-                  message:
-                    "Your account is not yet approved by Extramus. Please get contact with an Authorized person to approve your registration.",
-                });
+              res.status(404).json({
+                message:
+                  "Your account is not yet approved by Extramus. Please get contact with an Authorized person to approve your registration.",
+              });
             } else {
               const token = jwt.sign(
                 { userId: user.id },

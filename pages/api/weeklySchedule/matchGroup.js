@@ -3,9 +3,9 @@ import WeeklySchedule from "../../../models/weeklySchedule";
 import dbConnect from "../../../util/mongodb";
 import { tokenCheckFunction } from "../auth/tokenCheck";
 
-dbConnect();
-
 export default async function handler(req, res) {
+  const db = await getMongoDb();
+  await dbConnect();
   const { method } = req;
   //    // Token CHECK
   //    let token = req.query.token
@@ -21,8 +21,6 @@ export default async function handler(req, res) {
   //  }
   //  // Token CHECK
 
-  const db = await getMongoDb();
-  await dbConnect();
   if (method === "GET") {
     try {
       const weeklySchedule = await WeeklySchedule.findOne({

@@ -4,8 +4,9 @@ import { SMTPClient } from "emailjs";
 import dbConnect from "../../../util/mongodb";
 import User from "../../../models/user";
 import jwt from "jsonwebtoken";
-dbConnect();
+
 export default async function handler(req, res) {
+  await dbConnect();
   try {
     const { email } = req.body;
     const user = await User.findOne({ email: email });
@@ -20,7 +21,6 @@ export default async function handler(req, res) {
             expiresIn: "7d",
           }
         );
-        
 
         const client = new SMTPClient({
           user: process.env.GOOGLE_USER,

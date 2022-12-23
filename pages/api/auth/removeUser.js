@@ -2,9 +2,9 @@
 import dbConnect from "../../../util/mongodb";
 import { SMTPClient } from "emailjs";
 import User from "../../../models/user";
-dbConnect();
 
 export default async (req, res) => {
+  await dbConnect();
   try {
     if (req.method === "POST") {
       const { email } = req.body;

@@ -4,12 +4,12 @@ import { SMTPClient } from "emailjs";
 import User from "../../../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-dbConnect();
 
 export default async (req, res) => {
+  await dbConnect();
   try {
     if (req.method === "POST") {
-      const {email} = req.body;
+      const { email } = req.body;
       const user = await User.findOne({ email: email });
       if (user) {
         user.confirmation = "1";
@@ -28,11 +28,9 @@ export default async (req, res) => {
           to: email,
           subject: "EXTRAMUS REGİSTRATİON",
         });
-        
 
         res.status(200).json({ message: "Confirmation is Success" });
-
-      }else {
+      } else {
         res.status(422).json({ message: "User is not Exists" });
       }
     }
